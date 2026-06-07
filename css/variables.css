@@ -1,0 +1,43 @@
+:root {
+  --fondo-premium: #0A1F1C;
+  --blanco: #FFFFFF;
+  --dorado: #F59E0B;
+  --menta: #10B981;
+  --gris-secundario: #94A3B8;
+  --verde-mid: #0F3D35;
+  --verde-light: #164E44;
+  --gris-pale: #112D29;
+  --negro: #05100E;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --r: 12px;
+  --r-lg: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--blanco);
+  background: var(--fondo-premium);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--dorado);
+  text-decoration: none;
+  transition: color .15s;
+}
+
+a:hover {
+  color: var(--menta);
+}

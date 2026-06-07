@@ -1,0 +1,53 @@
+/* REGLAS RESPONSIVAS PARA MÓVILES (PANTALLAS < 768px) */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--fondo-premium);
+    border-bottom: 1px solid var(--verde-light);
+    padding: 1.5rem;
+    z-index: 99;
+    gap: 8px;
+  }
+  .hamburger {
+    display: block;
+  }
+  
+  .hero {
+    padding: 4rem 1rem;
+    min-height: auto;
+  }
+  
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  .cv-head {
+    flex-direction: column;
+    text-align: left;
+  }
+  .cv-print-area .cv-contact-info {
+    text-align: left;
+  }
+}
