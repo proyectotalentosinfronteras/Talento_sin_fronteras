@@ -51,3 +51,116 @@
     text-align: left;
   }
 }
+/* ==========================================================================
+   🎯 MEDIA QUERIES - DISEÑO RESPONSIVE (MÓVILES Y TABLETS)
+   ========================================================================== */
+
+/* 📱 1. DISPOSITIVOS MEDIANOS (Tablets y pantallas hasta 992px) */
+@media (max-width: 992px) {
+    .container, .hero-container, .nav-container {
+        width: 90%;
+        padding: 0 20px;
+    }
+
+    /* Ajuste del Hero de bienvenida */
+    .hero h1 {
+        font-size: 2.5rem; /* Texto un poco más pequeño para que no se corte */
+    }
+    
+    /* La cuadrícula de módulos pasa de 4 a 2 columnas */
+    .modules-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    /* Pestañas de las herramientas de IA */
+    .ia-tabs {
+        flex-direction: column; /* Botones apilados */
+        gap: 10px;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 📱 2. DISPOSITIVOS PEQUEÑOS (Móviles en vertical hasta 600px) */
+@media (max-width: 600px) {
+    /* Ajustes generales de espaciado y estructura */
+    .section {
+        padding: 40px 0;
+    }
+
+    /* Menú de Navegación */
+    .nav-links {
+        display: none; /* 💡 Nota: Aquí va oculto para activarse con el botón hamburguesa */
+    }
+    
+    .hamburger {
+        display: block; /* Muestra el icono de menú de tres líneas */
+    }
+
+    /* Ajuste del Hero principal */
+    .hero {
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero-actions {
+        flex-direction: column; /* Los botones se ponen uno debajo del otro */
+        width: 100%;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%; /* Botones a pantalla completa en móvil */
+        text-align: center;
+    }
+
+    .hero-tags {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* 🚨 CLAVE: La cuadrícula de módulos pasa a 1 sola columna */
+    .modules-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Tarjetas individuales */
+    .card {
+        padding: 20px;
+    }
+
+    /* Caja interactiva del Asistente de IA y Simulador */
+    .interactive-box {
+        padding: 15px;
+    }
+
+    .chat-input-row {
+        flex-direction: column; /* El input y el botón se apilan */
+        gap: 10px;
+    }
+
+    .chat-input-row input {
+        width: 100%;
+    }
+
+    .chat-input-row .btn {
+        width: 100%;
+    }
+
+    /* Pie de página (Footer) */
+    .footer-grid {
+        grid-template-columns: 1fr; /* Todo en una sola columna */
+        text-align: center;
+        gap: 30px;
+    }
+}
