@@ -164,3 +164,44 @@
         gap: 30px;
     }
 }
+/* ==========================================================================
+   🎯 CORRECCIÓN DE MENÚS ADAPTABLES (OPCIÓN B - COLUMNAS)
+   ========================================================================== */
+
+/* 📱 Ajuste para Tablets (como tu iPad - pantallas menores a 1024px) */
+@media (max-width: 1024px) {
+    /* Barra de navegación superior principal */
+    .nav-links {
+        display: flex !important;
+        flex-wrap: wrap !important; /* Si no caben, bajan de línea de forma limpia */
+        justify-content: center !important;
+        gap: 10px !important;
+        padding: 10px 0;
+    }
+
+    /* 🚨 La barra secundaria de pestañas / submenú (la que se cortaba) */
+    .nav-links, .navbar nav, [class*="tabs"], [class*="pestanas"] {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important; /* Se divide en 2 columnas perfectas */
+        gap: 8px !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Ajuste de los enlaces dentro de la barra */
+    .nav-links a, nav a, .tabs-navbar button {
+        display: block !important;
+        padding: 10px !important;
+        font-size: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* 📱 Ajuste para Móviles (como tu iPhone - pantallas menores a 600px) */
+@media (max-width: 600px) {
+    /* En pantallas muy pequeñas, una sola columna para que el texto no se amontone */
+    .nav-links, .navbar nav, [class*="tabs"], [class*="pestanas"] {
+        grid-template-columns: 1fr !important; /* 1 sola columna de arriba a abajo */
+    }
+}
