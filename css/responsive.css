@@ -165,44 +165,60 @@
     }
 }
 /* ==========================================================================
-   🎯 CORRECCIÓN PARA LA BARRA GRIS (SUBMENÚ DE PESTAÑAS)
+   🎯 DISEÑO RESPONSIVE PERFECTO PARA TALENTO SIN FRONTERAS
    ========================================================================== */
 
-/* 📱 Ajuste exclusivo para Tablets (iPad y pantallas hasta 1024px) */
+/* 🍏 Ajustes para TABLET (iPad y pantallas hasta 1024px) */
 @media (max-width: 1024px) {
-    /* 1. Aseguramos que el menú superior NO se rompa ni use grid */
-    .navbar .nav-links, .nav-container nav {
-        display: none !important; /* Mantiene oculto el menú de arriba si usas hamburguesa */
-    }
     
-    /* 2. Modificamos EXCLUSIVAMENTE la barra gris de pestañas */
-    /* Buscamos el contenedor exacto usando las clases del vídeo anterior */
-    .ia-tabs, .modules-grid, div[class*="tabs-navbar"], .tabs-container {
+    /* 🚨 LA SOLUCIÓN: Organizamos la barra gris en una cuadrícula limpia */
+    .main-nav-tab {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important; /* 2 columnas perfectas */
-        gap: 12px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-        padding: 10px !important;
+        gap: 10px !important;
+        padding: 12px !important;
+        background-color: #0b1a16 !important; /* Mantiene tu fondo oscuro premium */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Ajuste de los botones/enlaces dentro de esa barra gris */
-    .ia-tabs button, .ia-tabs a, div[class*="tabs-navbar"] a, .tab-btn {
-        display: block !important;
+    /* Ajustamos los botones internos para que ocupen su celda entera y no se pisen */
+    .main-tab-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
         width: 100% !important;
-        white-space: normal !important; /* Permite que el texto largo salte de línea si es necesario */
-        text-align: center !important;
         padding: 12px 8px !important;
         font-size: 14px !important;
         box-sizing: border-box !important;
+        white-space: normal !important; /* Permite que el texto baje de línea si es largo */
+        text-align: center !important;
+    }
+
+    /* Mantenemos el menú de arriba limpio y en su sitio */
+    .nav-links {
+        display: none; /* Se oculta para usar el menú hamburguesa si está programado */
     }
 }
 
-/* 📱 Ajuste exclusivo para Móviles (iPhone y pantallas hasta 600px) */
+/* 📱 Ajustes para MÓVIL (iPhone y pantallas hasta 600px) */
 @media (max-width: 600px) {
-    /* En teléfonos, la barra gris pasa a tener 1 sola columna bien estructurada */
-    .ia-tabs, div[class*="tabs-navbar"], .tabs-container {
-        grid-template-columns: 1fr !important; /* Un botón debajo del otro */
+    
+    /* En teléfonos se transforma en una sola columna limpia, un botón debajo del otro */
+    .main-nav-tab {
+        grid-template-columns: 1fr !important; 
+        gap: 8px !important;
+    }
+
+    /* Ajuste de tamaño del título del Hero para que no se vea gigante */
+    .hero h1 {
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .hero-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 }
