@@ -5,12 +5,12 @@
     <!-- El viewport ya lo tenías aquí, ¡perfecto! -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Talento sin Fronteras — Empleo en España para latinoamericanos</title>
+    <title>Talento sin Fronteras — Empleo en España para extranjeros</title>
     
     <!-- AQUÍ AGREGAMOS EL FAVICON -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     
-    <meta name="description" content="Guía completa de documentación, regularización, homologación y derechos laborales para latinoamericanos con NIE o doble nacionalidad en España.">
+    <meta name="description" content="Guía completa de documentación, regularización, homologación y derechos laborales para extranjeros con NIE o doble nacionalidad en España.">
     
     <!-- Tus fuentes y estilos externos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -247,26 +247,80 @@ a:hover{color:var(--menta);text-decoration:none}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--verde-light);border-top-color:var(--dorado);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* RESPONSIVE */
+/* DRAWER */
+.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;backdrop-filter:blur(2px)}
+.drawer-overlay.open{display:block}
+.drawer{position:fixed;top:0;left:0;height:100%;width:260px;background:var(--fondo-premium);border-right:1px solid var(--verde-light);z-index:201;transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:0}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--verde-light)}
+.drawer-logo{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--blanco);display:flex;align-items:center;gap:7px}
+.drawer-close{background:none;border:none;color:var(--gris-secundario);font-size:1.3rem;cursor:pointer;line-height:1;padding:4px}
+.drawer-close:hover{color:var(--dorado)}
+.drawer-nav{list-style:none;padding:1rem 0;flex:1}
+.drawer-nav li a{display:flex;align-items:center;gap:10px;padding:.75rem 1.25rem;font-size:.9rem;font-weight:500;color:var(--gris-secundario);transition:all .15s;text-decoration:none}
+.drawer-nav li a:hover,.drawer-nav li a.active{background:var(--gris-pale);color:var(--blanco)}
+.drawer-nav li a i{font-size:1.1rem;width:20px;text-align:center}
+.drawer-cta{margin:0 1.25rem 1.5rem;background:linear-gradient(135deg,var(--dorado),#D97706);color:var(--negro);font-weight:700;border-radius:10px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:10px;font-size:.9rem;cursor:pointer;border:none;font-family:var(--font-body);width:calc(100% - 2.5rem);text-decoration:none}
+.drawer-cta:hover{filter:brightness(1.1);color:var(--negro);text-decoration:none}
+
+/* RESPONSIVE — tablet */
+@media(max-width:900px){
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .grid-2{grid-template-columns:1fr}
+  .company-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+}
+
+/* RESPONSIVE — móvil */
 @media(max-width:768px){
   .nav-links{display:none}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:var(--fondo-premium);border-bottom:1px solid var(--verde-light);padding:1rem 2rem;z-index:99;gap:4px}
   .hamburger{display:block}
   .hero{padding:3.5rem 1.5rem 3rem}
   .footer-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .section{padding:3.5rem 0}
+  .grid-3{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .company-grid{grid-template-columns:1fr}
+  .card[style*="grid-column"]{grid-column:span 1 !important}
+  .container{padding:0 1rem}
+  .container-sm{padding:0 1rem}
+  .mod-tabs{flex-direction:column!important}
+  .mod-tabs .tab-btn{border-bottom:1px solid var(--verde-mid)!important;border-left:3px solid transparent;text-align:left;padding:12px 16px}
+  .mod-tabs .tab-btn.active{border-left-color:var(--dorado)!important;border-bottom-color:transparent!important}
+  .mod-tabs .tab-btn:last-child{border-bottom:none!important}
+  .chat-wrap{border-radius:var(--r);overflow:visible}
+  #mod-cv{padding:1rem!important}
+  .cv-head{flex-direction:column;gap:.5rem}
+  .cv-contact-info{text-align:left!important}
+  .cv-preview{font-size:.8rem}
 }
 </style>
 </head>
 <body>
+
+<!-- DRAWER MÓVIL -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer" role="dialog" aria-label="Menú de navegación">
+  <div class="drawer-head">
+    <div class="drawer-logo"><div class="logo-dot"></div> Talento sin Fronteras</div>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Cerrar menú"><i class="ti ti-x"></i></button>
+  </div>
+  <ul class="drawer-nav">
+    <li><a href="#" id="d-inicio" class="active" onclick="showMain('inicio');closeDrawer()"><i class="ti ti-home"></i> Inicio</a></li>
+    <li><a href="#" id="d-guia" onclick="showMain('guia');closeDrawer()"><i class="ti ti-map"></i> Guía paso a paso</a></li>
+    <li><a href="#" id="d-documentacion" onclick="showMain('documentacion');closeDrawer()"><i class="ti ti-id"></i> Documentación</a></li>
+    <li><a href="#" id="d-derechos" onclick="showMain('derechos');closeDrawer()"><i class="ti ti-shield"></i> Derechos Laborales</a></li>
+    <li><a href="#" id="d-empresas" onclick="showMain('empresas');closeDrawer()"><i class="ti ti-building"></i> Empresas Inclusivas</a></li>
+  </ul>
+  <a href="#" class="drawer-cta" onclick="showMain('herramientas');closeDrawer()"><i class="ti ti-robot"></i> Herramientas con IA</a>
+</div>
 
 <nav class="nav">
   <div class="nav-inner">
     <a href="#inicio" class="logo" onclick="showMain('inicio')">
       <div class="logo-dot"></div> Talento sin Fronteras
     </a>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú"><i class="ti ti-menu-2"></i></button>
+    <button class="hamburger" onclick="openDrawer()" aria-label="Abrir menú"><i class="ti ti-menu-2"></i></button>
     <ul class="nav-links" id="nav-menu">
       <li><a href="#inicio" id="m-inicio" class="active" onclick="showMain('inicio')">Inicio</a></li>
       <li><a href="#guia" id="m-guia" onclick="showMain('guia')">Guía</a></li>
@@ -278,14 +332,7 @@ a:hover{color:var(--menta);text-decoration:none}
   </div>
 </nav>
 
-<div class="main-nav-tab">
-  <button class="main-tab-btn active" id="tb-inicio" onclick="showMain('inicio')"><i class="ti ti-home"></i> Inicio</button>
-  <button class="main-tab-btn" id="tb-guia" onclick="showMain('guia')"><i class="ti ti-map"></i> Guía paso a paso</button>
-  <button class="main-tab-btn" id="tb-documentacion" onclick="showMain('documentacion')"><i class="ti ti-id"></i> Documentación</button>
-  <button class="main-tab-btn" id="tb-derechos" onclick="showMain('derechos')"><i class="ti ti-shield"></i> Derechos Laborales</button>
-  <button class="main-tab-btn" id="tb-empresas" onclick="showMain('empresas')"><i class="ti ti-building"></i> Empresas Inclusivas</button>
-  <button class="main-tab-btn" id="tb-herramientas" onclick="showMain('herramientas')"><i class="ti ti-robot"></i> Herramientas con IA</button>
-</div>
+
 
 <main>
 
@@ -301,8 +348,8 @@ a:hover{color:var(--menta);text-decoration:none}
           <a href="#guia" class="btn btn-blanco" onclick="showMain('guia')">Explorar guía completa</a>
           <a href="#herramientas" class="btn btn-outline-blanco" onclick="showMain('herramientas')">Consultor con IA</a>
         </div>
-       
-        
+      </div>
+    </header>
 
     <section class="section section-alt">
       <div class="container">
@@ -336,19 +383,16 @@ a:hover{color:var(--menta);text-decoration:none}
             <p>Directorio de empresas en España con certificaciones reales de diversidad e inclusión.</p>
             <div class="card-link">Ver empresas <i class="ti ti-arrow-right"></i></div>
           </div>
-          <div class="col-md-8">
-            <div class="card" onclick="showMain('herramientas')" style="cursor:pointer">
-              <div class="card-icon" style="background:var(--gris-pale)"><i class="ti ti-robot" style="color:var(--menta)"></i>
-              </div>
-              <h3>Herramientas con IA</h3>
-              <p>Consultor personalizado, generador de CV adaptado y simulador de entrevistas con inteligencia artificial.</p>
-              <div class="card-link">Abrir herramientas <i class="ti ti-arrow-right"></i></div>
-  </div>
-</div>
+          <div class="card" onclick="showMain('herramientas')" style="cursor:pointer; grid-column: span 2;">
+            <div class="card-icon" style="background:var(--gris-pale)"><i class="ti ti-robot" style="color:var(--menta)"></i></div>
+            <h3>Herramientas con IA</h3>
+            <p>Consultor personalizado, generador de CV adaptado y simulador de entrevistas con inteligencia artificial.</p>
+            <div class="card-link">Abrir herramientas <i class="ti ti-arrow-right"></i></div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
+  </div>
 
   <div id="sec-guia" class="section-tab">
     <section class="section">
@@ -479,133 +523,7 @@ a:hover{color:var(--menta);text-decoration:none}
           <button class="filter-btn" onclick="filterSector('consultoria')">Consultoría y Gestión</button>
           <button class="filter-btn" onclick="filterSector('atencion')">Atención al Cliente</button>
         </div>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directorio de 42 Empresas Inclusivas en España</title>
-    <style>
-        body {
-            background-color: #0b1d1a;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
 
-        .header-container {
-            text-align: center;
-            max-width: 850px;
-            margin-bottom: 40px;
-        }
-
-        .main-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #0d3c75;
-            display: inline-block;
-            padding: 5px 15px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #8bb2b2;
-            line-height: 1.6;
-        }
-
-        .directory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1450px;
-        }
-
-        .company-card {
-            background-color: #0e2925;
-            border: 1px solid #163d37;
-            border-radius: 12px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .company-card:hover {
-            transform: translateY(-5px);
-            border-color: #1e524a;
-        }
-
-        .company-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin: 0 0 5px 0;
-            color: #ffffff;
-        }
-
-        .company-sector {
-            font-size: 0.85rem;
-            color: #00ffcc;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .tags-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-weight: bold;
-        }
-
-        .tag-blue {
-            background-color: rgba(0, 123, 255, 0.15);
-            color: #38b6ff;
-            border: 1px solid rgba(0, 123, 255, 0.3);
-        }
-
-        .tag-orange {
-            background-color: rgba(255, 159, 28, 0.15);
-            color: #ff9f1c;
-            border: 1px solid rgba(255, 159, 28, 0.3);
-        }
-
-        .tag-green {
-            background-color: rgba(0, 255, 204, 0.15);
-            color: #00ffcc;
-            border: 1px solid rgba(0, 255, 204, 0.3);
-        }
-
-        .company-description {
-            font-size: 0.95rem;
-            color: #a4c2c2;
-            line-height: 1.5;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header-container">
-        <div class="main-title">Empresas con Compromiso Real</div>
-        <p class="subtitle">Directorio masivo de 42 corporaciones operando en España, avaladas por sus entornos multiculturales, políticas de igualdad de oportunidades y contratación sin sesgos geográficos.</p>
-    </div>
-
-    <div class="directory-grid">
         <div class="company-grid" id="lista-empresas">
                    <!-- ================= CONSULTORÍA Y GESTIÓN ================= -->
           <div class="company-card" data-sector="consultoria">
@@ -1046,10 +964,10 @@ a:hover{color:var(--menta);text-decoration:none}
         </div>
 
         <div class="chat-wrap" style="max-width:900px">
-          <div class="tabs" style="background:var(--verde-light); padding:0; border-bottom:none; margin-bottom:0">
-            <button class="tab-btn active" id="btn-mod-chat" onclick="switchMod('chat')" style="color:var(--negro); font-weight:600">1. Consultor IA de Visados</button>
-            <button class="tab-btn" id="btn-mod-cv" onclick="switchMod('cv')" style="color:var(--negro); font-weight:600">2. Generador de CV ATS</button>
-            <button class="tab-btn" id="btn-mod-entrevista" onclick="switchMod('entrevista')" style="color:var(--negro); font-weight:600">3. Simulador de Entrevistas</button>
+          <div class="tabs mod-tabs" style="background:var(--verde-light); padding:0; border-bottom:none; margin-bottom:0">
+            <button class="tab-btn active" id="btn-mod-chat" onclick="switchMod('chat')" style="color:var(--blanco); font-weight:600">1. Consultor IA de Visados</button>
+            <button class="tab-btn" id="btn-mod-cv" onclick="switchMod('cv')" style="color:var(--blanco); font-weight:600">2. Generador de CV ATS</button>
+            <button class="tab-btn" id="btn-mod-entrevista" onclick="switchMod('entrevista')" style="color:var(--blanco); font-weight:600">3. Simulador de Entrevistas</button>
           </div>
 
           <div id="mod-chat" class="mod-panel" style="display:none">
@@ -1118,31 +1036,36 @@ a:hover{color:var(--menta);text-decoration:none}
             </div>
           </div>
 
-    <div id="mod-entrevista" class="mod-panel" style="display:none; padding:1.5rem; background:white; border:1px solid #ddd; border-radius:10px;">
-    <div class="interview-wrap">
-        <div class="interview-head">
-            <div style="font-size:1.05rem; font-weight:600">Simulador de Entrevistas</div>
-            <p style="font-size:.8rem; color:#666">Entrénate con la IA.</p>
-        </div>
-        <div style="padding:1.25rem">
-            <label>Selecciona tu perfil:</label>
-            <select id="int-perfil" style="width:100%" onchange="loadQuestion()">
-                <option value="data">Analista de Datos</option>
-                <option value="web">Desarrollador Web</option>
-                <option value="admin">Administración</option>
-            </select>
-            <div id="question-text" style="margin:1rem 0; font-weight:bold;">Pregunta del reclutador...</div>
-            <textarea id="answer-text" style="width:100%; height:80px;" placeholder="Escribe tu respuesta aquí..."></textarea>
-            <div style="margin-top:10px; display:flex; gap:10px;">
-                <button id="btn-evaluar" onclick="evaluateAnswer()">Evaluar con IA</button>
-                <button onclick="loadQuestion()">Cambiar pregunta</button>
+          <div id="mod-entrevista" class="mod-panel" style="display:none; padding:1.5rem">
+            <div class="interview-wrap">
+              <div class="interview-head">
+                <div style="font-size:1.05rem; font-weight:600">Simulador de Entrevistas</div>
+                <p style="font-size:.8rem; color:var(--gris-secundario)">Entrénate con la IA.</p>
+              </div>
+              <div style="padding:1.25rem">
+                <div class="fg" style="margin-bottom:1rem">
+                  <label>Selecciona tu perfil:</label>
+                  <select id="int-perfil" onchange="loadQuestion()">
+                    <option value="data">Analista de Datos</option>
+                    <option value="web">Desarrollador Web</option>
+                    <option value="admin">Administración</option>
+                  </select>
+                </div>
+                <div class="question-box" id="question-text">Pregunta del reclutador...</div>
+                <textarea id="answer-text" class="answer-area" placeholder="Escribe tu respuesta aquí..."></textarea>
+                <div style="display:flex; gap:10px; flex-wrap:wrap">
+                  <button id="btn-evaluar" class="btn btn-verde btn-sm" onclick="evaluateAnswer()"><i class="ti ti-sparkles"></i> Evaluar mi respuesta con IA</button>
+                  <button class="btn btn-outline-blanco btn-sm" onclick="loadQuestion()"><i class="ti ti-refresh"></i> Cambiar pregunta</button>
+                </div>
+                <div id="feedback-area" class="feedback-box">Resultado...</div>
+              </div>
             </div>
-            <div id="feedback-area" style="margin-top:1rem; padding:10px; background:#f0f0f0;">Resultado...</div>
-        </div>
-    </div>
-</div>
+          </div>
 
-<button onclick="abrirSimulador()" style="margin:20px; padding:10px 20px;">Abrir Simulador de Entrevistas</button>
+        </div><!-- /.chat-wrap -->
+      </div><!-- /.container -->
+    </section>
+  </div><!-- /#sec-herramientas -->
 
 </main>
 
@@ -1173,31 +1096,39 @@ a:hover{color:var(--menta);text-decoration:none}
     </div>
   </div>
   <div class="footer-bottom">
-    <div>&copy; 2026 Talento sin Fronteras · Hecho con 💚 para la comunidad latina en España.</div>
+    <div>&copy; 2026 Talento sin Fronteras · Hecho con 💚 para la comunidad extranjera en España.</div>
     <div style="font-style:italic; color:var(--gris-secundario)">Información orientativa de libre acceso. No sustituye asesoría legal profesional.</div>
   </div>
 </footer>
 
 <script>
 // Menú Responsive en Móviles
-function toggleMenu(){
-  document.getElementById('nav-menu').classList.toggle('open');
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function toggleMenu(){ openDrawer(); }
 
 // Enrutamiento Dinámico de Secciones Principales
 function showMain(targetId){
   document.querySelectorAll('.section-tab').forEach(sec => sec.classList.remove('active'));
-  document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-  
+  document.querySelectorAll('.drawer-nav a').forEach(link => link.classList.remove('active'));
+
   const targetSection = document.getElementById('sec-' + targetId);
-  const targetTabBtn = document.getElementById('tb-' + targetId);
   const targetMenuLink = document.getElementById('m-' + targetId);
-  
+  const targetDrawerLink = document.getElementById('d-' + targetId);
+
   if(targetSection) targetSection.classList.add('active');
-  if(targetTabBtn) targetTabBtn.classList.add('active');
   if(targetMenuLink) targetMenuLink.classList.add('active');
-  
+  if(targetDrawerLink) targetDrawerLink.classList.add('active');
+
   document.getElementById('nav-menu').classList.remove('open');
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
