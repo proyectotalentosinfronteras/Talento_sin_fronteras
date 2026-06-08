@@ -979,12 +979,13 @@ a:hover{color:var(--menta);text-decoration:none}
               </div>
             </div>
             <div class="chat-msgs" id="chat-box">
-              <div class="msg msg-bot">¡Hola! Soy tu consultor de IA. Pregúntame lo que quieras sobre cómo regularizar tu NIE, arraigos, visas de nómada digital o cómo validar tu perfil en España.</div>
+              <div class="msg msg-bot">¡Hola! 👋 Soy tu consultor de extranjería con la normativa actualizada a 2026. Puedo orientarte sobre los <strong>5 tipos de arraigo</strong>, renovación de NIE/TIE, cómo pasar de visado de estudiante a permiso de trabajo, la <strong>regularización extraordinaria 2026</strong> y mucho más. ¿Cuál es tu consulta?</div>
             </div>
             <div class="quick-btns">
-              <button class="quick-btn" onclick="quickQuery('¿Qué es el arraigo para la formación?')">¿Qué es el arraigo para la formación?</button>
-              <button class="quick-btn" onclick="quickQuery('Requisitos para Visa Nómada Digital')">Requisitos para Visa Nómada Digital</button>
-              <button class="quick-btn" onclick="quickQuery('¿Puedo trabajar con visa de estudiante?')">¿Puedo trabajar con visa de estudiante?</button>
+              <button class="quick-btn" onclick="quickQuery('¿Cuáles son los 5 tipos de arraigo en 2026 y sus requisitos?')">🏠 Tipos de arraigo 2026</button>
+              <button class="quick-btn" onclick="quickQuery('¿Qué necesito para renovar mi TIE en 2026?')">🪪 Renovar NIE/TIE</button>
+              <button class="quick-btn" onclick="quickQuery('¿Cómo cambio mi visado de estudiante a permiso de trabajo en 2026?')">💼 Estudiante → Trabajo</button>
+              <button class="quick-btn" onclick="quickQuery('¿Qué es la regularización extraordinaria 2026 y quién puede solicitarla?')">⭐ Regularización 2026</button>
             </div>
             <div class="chat-input-row">
               <input type="text" class="chat-input" id="chat-in" placeholder="Escribe tu consulta legal o de empleo aquí..." onkeypress="if(event.key==='Enter')sendChat()">
@@ -1073,7 +1074,7 @@ a:hover{color:var(--menta);text-decoration:none}
   <div class="footer-grid">
     <div class="footer-col">
       <div class="footer-brand">Talento <span>sin Fronteras</span></div>
-      <p class="footer-desc">Plataforma integral, interactiva y gratuita de orientación laboral y regularización para profesionales latinoamericanos con NIE activo o doble nacionalidad en España. Sin discriminación, con estrategia.</p>
+      <p class="footer-desc">Plataforma integral, interactiva y gratuita de orientación laboral y regularización para profesionales extranjeros con NIE activo o doble nacionalidad en España. Sin discriminación, con estrategia.</p>
     </div>
     <div class="footer-col">
       <h4>Módulos</h4>
@@ -1214,47 +1215,137 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* SIMULACIÓN LOCAL DEL MOTOR DE INTELIGENCIA ARTIFICIAL */
 
-function sendChat() {
+/* ── SISTEMA DE PROMPTS DE EXTRANJERÍA 2026 ─────────────────────────────── */
+const EXTRANJERIA_SYSTEM_PROMPT = `Eres un consultor experto en extranjería española, actualizado con la normativa vigente en 2026. 
+Responde SIEMPRE en español, de forma clara, estructurada y empática, como si hablaras con un extranjero que necesita orientación real.
+
+NORMATIVA VIGENTE 2026 QUE DEBES USAR:
+
+## ARRAIGOS (5 tipos vigentes desde el RD 1155/2024, en vigor mayo 2025):
+
+**1. Arraigo Social:**
+- Requisito: 2 años de permanencia continuada en España (reducido de 3 a 2 por la reforma)
+- Documentos: pasaporte, empadronamiento histórico, antecedentes penales apostillados (España + país origen últimos 5 años), informe de integración social del Ayuntamiento, contrato de trabajo (mínimo 1 año a jornada completa o 20h si tiene menores) o medios económicos propios (100% IPREM = ~600€/mes en 2026)
+- Duración: 1 año inicial, renovaciones de 4 años
+- Trámite: Oficina de Extranjería o telemático por MERCURIO
+- Plazo resolución: 3 meses
+
+**2. Arraigo Sociolaboral:**
+- Requisito: relación laboral no declarada de mínimo 6 meses, acreditada mediante sentencia o resolución de la Inspección de Trabajo
+- Permite trabajar por cuenta ajena o propia
+
+**3. Arraigo Familiar:**
+- Para extranjeros con hijos españoles o progenitor/a de ciudadano español
+- No exige tiempo mínimo de residencia
+- Puede otorgar residencia de hasta 5 años directamente
+
+**4. Arraigo de Segunda Oportunidad:**
+- Para quien haya tenido residencia legal anterior y haya caído en irregularidad
+- Requisito: haber tenido autorización previa en España
+
+**5. Arraigo Socioformativo (antes "arraigo para la formación"):**
+- Requisito: 2 años en situación irregular + matricularse en formación reglada (FP, certificado profesionalidad, idiomas en universidad)
+- Permite trabajar hasta 20 horas semanales durante la formación
+- Si la formación dura más de 1 año, el permiso de trabajo posterior es de 4 años
+
+## RENOVACIÓN NIE/TIE:
+- El NIE (número) NO cambia nunca. Lo que se renueva es la Tarjeta de Identidad de Extranjero (TIE)
+- Documentos generales: formulario EX-17, pasaporte vigente, TIE anterior, fotos carné, justificante pago tasa 790
+- Para estudiantes 2026: ya NO hay que renovar cada año. La nueva autorización cubre toda la duración de los estudios. Solo hay que comunicar matrícula del nuevo curso a la Oficina de Extranjería
+- Seguro médico sin carencias ni copagos es requisito esencial
+- Acreditar medios económicos (IPREM actualizado: ~600€/mes en 2026)
+- Si hay resolución negativa: recurso de alzada en 1 mes o recurso contencioso-administrativo
+
+## CAMBIO DE VISADO ESTUDIANTE A PERMISO DE TRABAJO:
+- Modalidad: "Modificación de estancia por estudios a residencia y trabajo"
+- NO se necesita visado si ya estás en España
+- Desde la admisión a trámite: se puede trabajar a jornada completa (novedad 2026)
+- Por cuenta ajena: contrato de trabajo que cumpla requisitos SMI
+- Por cuenta propia: plan de empresa, viabilidad económica, recursos para inversión y experiencia/formación afín
+- Primera autorización: 1 año; renovaciones hasta 4 años
+- Si no encuentras contrato: el arraigo socioformativo es una alternativa
+
+## REGULARIZACIÓN EXTRAORDINARIA 2026:
+- Plazo: 16 abril al 30 junio 2026 (improrrogable)
+- Requisito: residencia previa al 31/12/2025
+- NO pueden solicitarla: quienes tengan trámite en curso, estudiantes, residentes no lucrativos
+- Trámite: plataforma MERCURIO o presencial en Correos, Seguridad Social u Oficinas de Extranjería habilitadas
+- Permiso obtenido: 1 año, luego modificable o prorrogable
+
+## VISA NÓMADA DIGITAL:
+- Requisitos: trabajar para empresas fuera de España (mín. 80% ingresos del extranjero), titulación universitaria o 3 años experiencia demostrable, ingresos mínimos 200% del SMI (~2.646€/mes en 2026)
+
+Cuando respondas:
+- Usa emojis de forma moderada para hacer el texto más legible (📋 ✅ ⚠️ 📅)
+- Estructura con puntos o numeración cuando haya varios requisitos
+- Siempre menciona que recomiendan consultar con un abogado de extranjería para su caso concreto
+- Si la pregunta no es sobre extranjería española, responde amablemente que solo puedes ayudar con temas de extranjería en España`;
+
+/* ── HISTORIAL DE CONVERSACIÓN ─────────────────────────────────────────── */
+let chatHistory = [];
+
+async function sendChat() {
   const input = document.getElementById('chat-in');
   const text = input.value.trim();
   if(!text) return;
   
   const box = document.getElementById('chat-box');
   
-  // Añadir pregunta del usuario
+  // Mensaje del usuario
   const userMsg = document.createElement('div');
   userMsg.className = 'msg msg-user';
   userMsg.innerText = text;
   box.appendChild(userMsg);
   input.value = '';
   box.scrollTop = box.scrollHeight;
+
+  // Añadir al historial
+  chatHistory.push({ role: 'user', content: text });
   
-  // Animación de pensamiento del bot
+  // Animación de pensamiento
   const thinking = document.createElement('div');
   thinking.className = 'msg-thinking';
-  thinking.innerHTML = '<span class="spinner"></span> El asesor de IA está analizando la normativa legal...';
+  thinking.innerHTML = '<span class="spinner"></span> Consultando normativa de extranjería 2026...';
   box.appendChild(thinking);
   box.scrollTop = box.scrollHeight;
-  
-  setTimeout(() => {
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: EXTRANJERIA_SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Lo siento, no pude procesar tu consulta. Inténtalo de nuevo.';
+
+    // Guardar respuesta en historial
+    chatHistory.push({ role: 'assistant', content: reply });
+
     thinking.remove();
-    const responseMsg = document.createElement('div');
-    responseMsg.className = 'msg msg-bot';
-    
-    // Respuestas lógicas predefinidas para dar dinamismo a la simulación
-    if(text.toLowerCase().includes('estudiante')) {
-      responseMsg.innerHTML = "Actualmente, con la reforma del reglamento de extranjería en España, la visa de estudiante permite trabajar automáticamente **hasta 30 horas semanales** de forma legal, siempre que las horas de trabajo no coincidan con las horas lectivas de tus estudios obligatorios.";
-    } else if(text.toLowerCase().includes('nómada') || text.toLowerCase().includes('nomada')) {
-      responseMsg.innerHTML = "La **Visa de Nómada Digital** requiere que demuestres que trabajas para empresas fuera de España, poseer una titulación universitaria o experiencia demostrable de al menos 3 años en tu sector, y certificar unos ingresos mínimos mensuales equivalentes al 200% del Salario Mínimo Interprofesional español.";
-    } else if(text.toLowerCase().includes('arraigo')) {
-      responseMsg.innerHTML = "El **Arraigo para la Formación** te otorga una residencia legal de 12 meses si te comprometes a realizar una formación reglada o certificado de profesionalidad oficial en España. Para solicitarlo, necesitas demostrar una permanencia continuada en el país de mínimo 2 años.";
-    } else {
-      responseMsg.innerHTML = "He recibido tu consulta sobre '" + text + "'. De acuerdo con el marco legal laboral en España, todo profesional extranjero con residencia activa, certificado comunitario o autorización tiene pleno derecho a postularse en igualdad de condiciones. Te sugiero adaptar tu CV al formato ciego en la pestaña contigua para optimizar la respuesta de los sistemas automatizados.";
-    }
-    
-    box.appendChild(responseMsg);
-    box.scrollTop = box.scrollHeight;
-  }, 1200);
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg msg-bot';
+    // Formatear markdown básico
+    botMsg.innerHTML = reply
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n- /g, '<br>• ')
+      .replace(/\n(\d+)\. /g, '<br>$1. ');
+    box.appendChild(botMsg);
+  } catch(err) {
+    thinking.remove();
+    const errMsg = document.createElement('div');
+    errMsg.className = 'msg msg-bot';
+    errMsg.innerHTML = '⚠️ Error al conectar con el servicio. Por favor, intenta de nuevo en unos segundos.';
+    box.appendChild(errMsg);
+  }
+
+  box.scrollTop = box.scrollHeight;
 }
 
 function quickQuery(text) {
