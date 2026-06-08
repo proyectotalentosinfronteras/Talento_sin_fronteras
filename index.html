@@ -1215,137 +1215,299 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* SIMULACIÓN LOCAL DEL MOTOR DE INTELIGENCIA ARTIFICIAL */
 
-/* ── SISTEMA DE PROMPTS DE EXTRANJERÍA 2026 ─────────────────────────────── */
-const EXTRANJERIA_SYSTEM_PROMPT = `Eres un consultor experto en extranjería española, actualizado con la normativa vigente en 2026. 
-Responde SIEMPRE en español, de forma clara, estructurada y empática, como si hablaras con un extranjero que necesita orientación real.
+/* ── CONSULTOR EXTRANJERÍA 2026 — RESPUESTAS LOCALES ────────────────────── */
 
-NORMATIVA VIGENTE 2026 QUE DEBES USAR:
+const respuestasExtranjeriaDB = [
+  {
+    keywords: ['arraigo','arraigos','tipos de arraigo','cuantos arraigos','5 arraigos'],
+    respuesta: `📋 <strong>Los 5 tipos de arraigo vigentes en 2026</strong> (RD 1155/2024, en vigor desde mayo 2025):<br><br>
+<strong>1. Arraigo Social</strong><br>
+• Permanencia continuada de <strong>2 años</strong> en España (antes eran 3)<br>
+• Documentos: pasaporte, empadronamiento histórico, antecedentes penales apostillados (España + país de origen, últimos 5 años), informe de integración social del Ayuntamiento, contrato de trabajo mínimo 1 año (o 20h si tienes menores a cargo) o medios económicos propios (~600€/mes)<br>
+• Duración: 1 año inicial + renovaciones de 4 años<br><br>
+<strong>2. Arraigo Sociolaboral</strong><br>
+• Relación laboral no declarada de mínimo 6 meses, acreditada por sentencia o resolución de Inspección de Trabajo<br><br>
+<strong>3. Arraigo Familiar</strong><br>
+• Para extranjeros con hijos españoles o que sean progenitor de ciudadano español<br>
+• Sin tiempo mínimo de residencia · puede dar residencia de hasta 5 años directamente<br><br>
+<strong>4. Arraigo de Segunda Oportunidad</strong><br>
+• Para quien tuvo residencia legal previa y cayó en situación irregular<br><br>
+<strong>5. Arraigo Socioformativo</strong><br>
+• 2 años en situación irregular + matricularse en FP, certificado de profesionalidad o idiomas en universidad<br>
+• Permite trabajar hasta 20h semanales durante la formación<br>
+• Si la formación dura más de 1 año → permiso de trabajo posterior de 4 años<br><br>
+⚠️ <em>Te recomiendo consultar con un abogado de extranjería para analizar cuál aplica mejor a tu caso concreto.</em>`
+  },
+  {
+    keywords: ['arraigo social','arraigo sociales','requisitos arraigo social'],
+    respuesta: `🏠 <strong>Arraigo Social 2026 — Requisitos completos</strong><br><br>
+✅ <strong>Requisitos principales:</strong><br>
+• Estar en España de forma continuada mínimo <strong>2 años</strong> (reducido de 3 por la reforma de 2025)<br>
+• No tener antecedentes penales en España ni en países donde hayas residido los últimos 5 años<br>
+• No tener prohibición de entrada en España<br>
+• No ser ciudadano de la UE<br><br>
+📋 <strong>Documentos necesarios:</strong><br>
+• Formulario EX-10<br>
+• Pasaporte completo (todas las páginas)<br>
+• Certificado de empadronamiento histórico (prueba más importante)<br>
+• Antecedentes penales apostillados de tu país de origen<br>
+• Informe de arraigo social emitido por los Servicios Sociales del Ayuntamiento<br>
+• Contrato de trabajo (mínimo 1 año, jornada completa) o medios económicos propios (~600€/mes en 2026)<br>
+• Fotos tamaño carné<br>
+• Justificante pago tasa 790<br><br>
+📅 <strong>Plazos:</strong><br>
+• Resolución en aproximadamente 3 meses<br>
+• Informe de arraigo del Ayuntamiento: 30 días desde solicitud<br><br>
+💶 <strong>Coste orientativo:</strong> ~600€ + tasas<br><br>
+⚠️ <em>Consulta con un abogado de extranjería para preparar bien el expediente — es la fase donde más errores se cometen.</em>`
+  },
+  {
+    keywords: ['arraigo socioformativo','arraigo formacion','arraigo formación','estudiar para arraigo'],
+    respuesta: `🎓 <strong>Arraigo Socioformativo 2026</strong><br><br>
+✅ <strong>Requisitos:</strong><br>
+• Llevar <strong>2 años en situación irregular</strong> en España<br>
+• Matricularse en: FP, Certificado de Profesionalidad, o idiomas en universidad acreditada<br>
+• No tener antecedentes penales<br><br>
+💼 <strong>Ventajas clave:</strong><br>
+• Puedes trabajar hasta <strong>20 horas semanales</strong> mientras estudias<br>
+• Si la formación dura más de 1 año → el permiso de trabajo posterior es de <strong>4 años</strong><br>
+• Se amplió el abanico de cursos válidos (hasta 50h en algunos casos)<br><br>
+📋 <strong>Documentos:</strong><br>
+• Pasaporte, empadronamiento, antecedentes penales apostillados<br>
+• Matrícula confirmada en el curso formativo<br>
+• Formulario EX-10<br><br>
+⚠️ <em>Es una excelente alternativa si no encuentras contrato de trabajo. Consulta con un abogado para verificar que tu curso es válido.</em>`
+  },
+  {
+    keywords: ['nie','renovar nie','renovacion nie','renovación nie','tie','renovar tie','renovacion tie'],
+    respuesta: `🪪 <strong>Renovación NIE/TIE 2026</strong><br><br>
+ℹ️ <strong>Importante:</strong> El NIE (número) <strong>NUNCA cambia</strong>. Lo que se renueva es la Tarjeta de Identidad de Extranjero (TIE).<br><br>
+📋 <strong>Documentos generales:</strong><br>
+• Formulario EX-17<br>
+• Pasaporte vigente (original + copia)<br>
+• TIE anterior<br>
+• Fotos tamaño carné<br>
+• Justificante pago tasa 790<br>
+• Seguro médico sin carencias ni copagos (filtro número 1 en 2026)<br>
+• Medios económicos: ~600€/mes (IPREM 2026)<br><br>
+🎓 <strong>Novedad 2026 para estudiantes:</strong><br>
+• Ya <strong>NO hay que renovar cada año</strong><br>
+• La autorización cubre toda la duración de los estudios<br>
+• Solo hay que comunicar la matrícula del nuevo curso a la Oficina de Extranjería<br><br>
+📅 <strong>¿Cuándo solicitarla?</strong><br>
+• 60 días antes de que caduque la TIE actual<br>
+• Si ya caducó: solicítala cuanto antes para evitar irregularidad sobrevenida<br><br>
+⚠️ <em>Si tienes resolución negativa, tienes 1 mes para recurso de alzada o recurso contencioso-administrativo.</em>`
+  },
+  {
+    keywords: ['estudiante trabajo','visado estudiante trabajo','cambiar visado estudiante','estudiante a trabajar','modificacion estancia estudios','modificación estancia'],
+    respuesta: `💼 <strong>Cambiar visado de estudiante a permiso de trabajo 2026</strong><br><br>
+📌 Modalidad oficial: <em>"Modificación de estancia por estudios a residencia y trabajo"</em><br><br>
+✅ <strong>Novedades 2026:</strong><br>
+• <strong>NO necesitas visado</strong> si ya estás en España<br>
+• Desde la admisión a trámite: puedes trabajar a <strong>jornada completa</strong> (gran novedad)<br>
+• Primera autorización: 1 año · Renovaciones: hasta 4 años<br><br>
+📋 <strong>Por cuenta ajena (con contrato):</strong><br>
+• Contrato de trabajo que cumpla el SMI vigente<br>
+• Pasaporte vigente, TIE de estudiante<br>
+• Formulario correspondiente + tasa<br><br>
+📋 <strong>Por cuenta propia (autónomo):</strong><br>
+• Plan de empresa con viabilidad económica<br>
+• Recursos para inversión inicial<br>
+• Experiencia o formación afín al negocio<br><br>
+🔄 <strong>Si no encuentras contrato:</strong><br>
+• El <strong>arraigo socioformativo</strong> es tu mejor alternativa — matrícula en FP o certificado de profesionalidad<br><br>
+⚠️ <em>Los familiares autorizados conjuntamente obtienen estabilidad y evitan procedimientos adicionales. Consulta con abogado de extranjería.</em>`
+  },
+  {
+    keywords: ['regularizacion','regularización','regularizacion extraordinaria','regularización extraordinaria','irregular','irregulares 2026'],
+    respuesta: `⭐ <strong>Regularización Extraordinaria 2026</strong><br><br>
+📅 <strong>Plazo:</strong> 16 abril – 30 junio 2026 (improrrogable)<br><br>
+✅ <strong>¿Quién puede solicitarla?</strong><br>
+• Extranjeros en situación irregular con residencia previa al 31/12/2025<br>
+• No tener antecedentes penales<br>
+• No estar en plazo de compromiso de no retorno<br><br>
+❌ <strong>¿Quién NO puede solicitarla?</strong><br>
+• Quienes tengan trámite en curso (renovación, prórroga o modificación)<br>
+• Estudiantes con visa de estudios activa<br>
+• Residentes no lucrativos<br>
+• Solicitantes de asilo o protección internacional<br><br>
+📋 <strong>Trámite:</strong><br>
+• Telemático: plataforma <strong>MERCURIO</strong><br>
+• Presencial: Correos, Seguridad Social u Oficinas de Extranjería habilitadas<br><br>
+🪪 <strong>Permiso obtenido:</strong><br>
+• 1 año de residencia y trabajo<br>
+• Luego modificable o prorrogable<br><br>
+ℹ️ Si tenías un arraigo en trámite desde el 20/05/2025 → se concede directamente sin nueva solicitud<br><br>
+⚠️ <em>El plazo es improrrogable. Si crees que puedes acogerte, actúa antes del 30 de junio 2026.</em>`
+  },
+  {
+    keywords: ['nomada digital','nómada digital','visa nomada','visado nómada','trabajo remoto','remote work'],
+    respuesta: `💻 <strong>Visa Nómada Digital España 2026</strong><br><br>
+✅ <strong>Requisitos principales:</strong><br>
+• Trabajar para empresas <strong>fuera de España</strong> (mínimo 80% de ingresos del extranjero)<br>
+• Titulación universitaria <strong>O</strong> experiencia demostrable de al menos 3 años en tu sector<br>
+• Ingresos mínimos: <strong>200% del SMI</strong> (~2.646€/mes netos en 2026)<br>
+• Seguro médico con cobertura total en España<br>
+• No tener antecedentes penales<br><br>
+📋 <strong>Documentos:</strong><br>
+• Pasaporte vigente<br>
+• Contrato con empresa extranjera o acreditación de actividad freelance<br>
+• Extractos bancarios de los últimos 3-6 meses<br>
+• Titulación o CV con experiencia profesional<br>
+• Seguro médico privado<br><br>
+⏱️ <strong>Duración:</strong> 1 año inicial, renovable hasta 5 años<br><br>
+💡 <strong>Ventaja fiscal:</strong> Puedes acogerte al régimen especial de impatriados (Ley Beckham) y tributar al 24% en lugar del tipo general<br><br>
+⚠️ <em>Consulta con un gestor fiscal y abogado de extranjería para optimizar tu situación tributaria.</em>`
+  },
+  {
+    keywords: ['nacionalidad','nacionalidad española','hacerme español','ciudadania','ciudadanía'],
+    respuesta: `🇪🇸 <strong>Nacionalidad Española 2026 — ¿Cuánto tiempo necesitas?</strong><br><br>
+⏱️ <strong>Plazos según origen:</strong><br>
+• <strong>10 años</strong>: caso general<br>
+• <strong>5 años</strong>: refugiados<br>
+• <strong>2 años</strong>: nacionales de países iberoamericanos, Andorra, Filipinas, Guinea Ecuatorial, Portugal y sefardíes<br>
+• <strong>1 año</strong>: nacido en España · casado/a con español/a · viudo/a de español/a · hijo/nieto de español de origen<br><br>
+📋 <strong>Requisitos generales:</strong><br>
+• Residencia legal y continuada durante el periodo exigido<br>
+• NIE/TIE vigente<br>
+• Sin antecedentes penales en España ni en el país de origen<br>
+• Prueba <strong>CCSE</strong> (conocimientos constitucionales) — si no eres hispanohablante también DELE A2<br>
+• Renuncia a la nacionalidad anterior (excepto iberoamericanos y países con convenio bilateral)<br><br>
+📅 <strong>Trámite:</strong><br>
+• Online en la sede electrónica del <strong>Ministerio de Justicia</strong><br>
+• Plazo de resolución: puede tardar entre 1 y 3 años actualmente<br><br>
+⚠️ <em>Los periodos de irregularidad no computan. Solo cuentan los años con residencia legal.</em>`
+  },
+  {
+    keywords: ['trabajar estudiante','puedo trabajar','horas trabajo estudiante','trabajar con visa estudiante'],
+    respuesta: `💼 <strong>¿Puedo trabajar con visa de estudiante en España? 2026</strong><br><br>
+✅ <strong>Sí, puedes trabajar</strong> con visa de estudiante, con límites:<br><br>
+📋 <strong>Condiciones:</strong><br>
+• Máximo <strong>30 horas semanales</strong> durante el curso académico<br>
+• Las horas de trabajo no pueden coincidir con las horas lectivas obligatorias<br>
+• En período vacacional: puedes trabajar a jornada completa<br><br>
+🔄 <strong>Para trabajar sin restricciones:</strong><br>
+• Solicita la <strong>Modificación de estancia por estudios a residencia y trabajo</strong><br>
+• Desde la admisión a trámite ya puedes trabajar a jornada completa (novedad 2026)<br><br>
+🎓 <strong>Arraigo socioformativo como alternativa:</strong><br>
+• Si llevas 2 años en situación irregular, puedes matricularte en FP o certificado de profesionalidad<br>
+• Trabajar hasta 20h semanales durante la formación<br><br>
+⚠️ <em>Revisa siempre las condiciones específicas de tu autorización de estancia. Consulta con un abogado de extranjería.</em>`
+  },
+  {
+    keywords: ['reagrupacion','reagrupación','reagrupar familia','traer familia','traer pareja','traer hijos'],
+    respuesta: `👨‍👩‍👧 <strong>Reagrupación Familiar en España 2026</strong><br><br>
+✅ <strong>¿Quién puede reagrupar?</strong><br>
+• Extranjeros con residencia legal de al menos <strong>1 año</strong> y autorización para residir al menos otro año más<br><br>
+👥 <strong>¿A quién puedes reagrupar?</strong><br>
+• Cónyuge o pareja de hecho registrada<br>
+• Hijos menores de 18 años (o mayores dependientes)<br>
+• Ascendientes mayores de 65 años a tu cargo<br><br>
+📋 <strong>Requisitos del reagrupante:</strong><br>
+• Vivienda adecuada (informe de habitabilidad)<br>
+• Medios económicos suficientes:<br>
+  — 1 familiar: 150% del IPREM (~900€/mes)<br>
+  — 2 familiares: 200% del IPREM (~1.200€/mes)<br>
+  — Por cada familiar adicional: +50% IPREM<br><br>
+📅 <strong>Plazo resolución:</strong> 3 meses<br><br>
+⚠️ <em>Los familiares reagrupados obtienen autorización de residencia y trabajo. Consulta con abogado de extranjería para preparar el expediente.</em>`
+  },
+  {
+    keywords: ['permiso residencia','residencia permanente','residencia larga duracion','larga duración','permanente'],
+    respuesta: `📄 <strong>Residencia de Larga Duración en España 2026</strong><br><br>
+✅ <strong>Requisitos:</strong><br>
+• <strong>5 años</strong> de residencia legal y continuada en España<br>
+• No tener antecedentes penales<br>
+• Medios económicos suficientes (mínimo 100% IPREM mensual)<br>
+• No haber estado fuera de España más de 10 meses en los 5 años (o 6 meses seguidos)<br><br>
+🌟 <strong>Ventajas de la larga duración:</strong><br>
+• Renovación automática (no caduca si no cometes infracciones graves)<br>
+• Libre acceso al mercado laboral sin restricciones<br>
+• Posibilidad de residir en otros países de la UE<br>
+• Base para solicitar la nacionalidad española<br><br>
+📋 <strong>Documentos:</strong><br>
+• Formulario EX-11<br>
+• Pasaporte, TIE actual<br>
+• Certificado de empadronamiento histórico<br>
+• Declaración de IRPF de los últimos años<br>
+• Tasa 790<br><br>
+⚠️ <em>Es el paso previo más sólido antes de solicitar la nacionalidad española.</em>`
+  },
+  {
+    keywords: ['mercurio','sede electronica','cita previa','cita extranjeria','donde tramitar'],
+    respuesta: `💻 <strong>¿Dónde tramitar los permisos de extranjería en España?</strong><br><br>
+🖥️ <strong>Plataforma MERCURIO (telemático):</strong><br>
+• <a href="https://sede.administracionespublicas.gob.es" target="_blank" style="color:var(--dorado)">sede.administracionespublicas.gob.es</a><br>
+• Necesitas certificado digital o Cl@ve PIN<br>
+• Disponible 24/7, recomendado para evitar desplazamientos<br><br>
+🏢 <strong>Presencial — Oficinas de Extranjería:</strong><br>
+• Pide cita previa en: <a href="https://icp.administracionelectronica.gob.es" target="_blank" style="color:var(--dorado)">icp.administracionelectronica.gob.es</a><br>
+• Lleva SIEMPRE original y copia de cada documento<br><br>
+📮 <strong>Otros puntos presenciales:</strong><br>
+• Oficinas de Correos habilitadas<br>
+• Oficinas de la Seguridad Social<br><br>
+📞 <strong>Consultas:</strong><br>
+• Teléfono extranjería: 060<br>
+• Atención en Alicante: Av. Aguilera, 1<br><br>
+⚠️ <em>Las citas previas para extranjería tienen mucha demanda. Revisa disponibilidad con semanas de antelación.</em>`
+  }
+];
 
-## ARRAIGOS (5 tipos vigentes desde el RD 1155/2024, en vigor mayo 2025):
+function buscarRespuesta(texto) {
+  const textoLower = texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  
+  for (const item of respuestasExtranjeriaDB) {
+    for (const keyword of item.keywords) {
+      const kwNorm = keyword.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      if (textoLower.includes(kwNorm)) {
+        return item.respuesta;
+      }
+    }
+  }
+  
+  // Respuesta genérica si no coincide
+  return `ℹ️ Gracias por tu consulta sobre <em>"${texto}"</em>.<br><br>
+Para orientarte correctamente, puedo ayudarte con estos temas de extranjería en España 2026:<br><br>
+• 🏠 <strong>Arraigos</strong> — los 5 tipos vigentes y sus requisitos<br>
+• 🪪 <strong>Renovación NIE/TIE</strong> — documentos y plazos<br>
+• 💼 <strong>Cambiar visado de estudiante a trabajo</strong><br>
+• ⭐ <strong>Regularización extraordinaria 2026</strong><br>
+• 💻 <strong>Visa Nómada Digital</strong><br>
+• 🇪🇸 <strong>Nacionalidad española</strong> — plazos según origen<br>
+• 👨‍👩‍👧 <strong>Reagrupación familiar</strong><br>
+• 📄 <strong>Residencia de larga duración</strong><br><br>
+Escribe tu pregunta con más detalle o usa los botones de acceso rápido. Para casos específicos, te recomiendo consultar con un <strong>abogado de extranjería</strong>.`;
+}
 
-**1. Arraigo Social:**
-- Requisito: 2 años de permanencia continuada en España (reducido de 3 a 2 por la reforma)
-- Documentos: pasaporte, empadronamiento histórico, antecedentes penales apostillados (España + país origen últimos 5 años), informe de integración social del Ayuntamiento, contrato de trabajo (mínimo 1 año a jornada completa o 20h si tiene menores) o medios económicos propios (100% IPREM = ~600€/mes en 2026)
-- Duración: 1 año inicial, renovaciones de 4 años
-- Trámite: Oficina de Extranjería o telemático por MERCURIO
-- Plazo resolución: 3 meses
-
-**2. Arraigo Sociolaboral:**
-- Requisito: relación laboral no declarada de mínimo 6 meses, acreditada mediante sentencia o resolución de la Inspección de Trabajo
-- Permite trabajar por cuenta ajena o propia
-
-**3. Arraigo Familiar:**
-- Para extranjeros con hijos españoles o progenitor/a de ciudadano español
-- No exige tiempo mínimo de residencia
-- Puede otorgar residencia de hasta 5 años directamente
-
-**4. Arraigo de Segunda Oportunidad:**
-- Para quien haya tenido residencia legal anterior y haya caído en irregularidad
-- Requisito: haber tenido autorización previa en España
-
-**5. Arraigo Socioformativo (antes "arraigo para la formación"):**
-- Requisito: 2 años en situación irregular + matricularse en formación reglada (FP, certificado profesionalidad, idiomas en universidad)
-- Permite trabajar hasta 20 horas semanales durante la formación
-- Si la formación dura más de 1 año, el permiso de trabajo posterior es de 4 años
-
-## RENOVACIÓN NIE/TIE:
-- El NIE (número) NO cambia nunca. Lo que se renueva es la Tarjeta de Identidad de Extranjero (TIE)
-- Documentos generales: formulario EX-17, pasaporte vigente, TIE anterior, fotos carné, justificante pago tasa 790
-- Para estudiantes 2026: ya NO hay que renovar cada año. La nueva autorización cubre toda la duración de los estudios. Solo hay que comunicar matrícula del nuevo curso a la Oficina de Extranjería
-- Seguro médico sin carencias ni copagos es requisito esencial
-- Acreditar medios económicos (IPREM actualizado: ~600€/mes en 2026)
-- Si hay resolución negativa: recurso de alzada en 1 mes o recurso contencioso-administrativo
-
-## CAMBIO DE VISADO ESTUDIANTE A PERMISO DE TRABAJO:
-- Modalidad: "Modificación de estancia por estudios a residencia y trabajo"
-- NO se necesita visado si ya estás en España
-- Desde la admisión a trámite: se puede trabajar a jornada completa (novedad 2026)
-- Por cuenta ajena: contrato de trabajo que cumpla requisitos SMI
-- Por cuenta propia: plan de empresa, viabilidad económica, recursos para inversión y experiencia/formación afín
-- Primera autorización: 1 año; renovaciones hasta 4 años
-- Si no encuentras contrato: el arraigo socioformativo es una alternativa
-
-## REGULARIZACIÓN EXTRAORDINARIA 2026:
-- Plazo: 16 abril al 30 junio 2026 (improrrogable)
-- Requisito: residencia previa al 31/12/2025
-- NO pueden solicitarla: quienes tengan trámite en curso, estudiantes, residentes no lucrativos
-- Trámite: plataforma MERCURIO o presencial en Correos, Seguridad Social u Oficinas de Extranjería habilitadas
-- Permiso obtenido: 1 año, luego modificable o prorrogable
-
-## VISA NÓMADA DIGITAL:
-- Requisitos: trabajar para empresas fuera de España (mín. 80% ingresos del extranjero), titulación universitaria o 3 años experiencia demostrable, ingresos mínimos 200% del SMI (~2.646€/mes en 2026)
-
-Cuando respondas:
-- Usa emojis de forma moderada para hacer el texto más legible (📋 ✅ ⚠️ 📅)
-- Estructura con puntos o numeración cuando haya varios requisitos
-- Siempre menciona que recomiendan consultar con un abogado de extranjería para su caso concreto
-- Si la pregunta no es sobre extranjería española, responde amablemente que solo puedes ayudar con temas de extranjería en España`;
-
-/* ── HISTORIAL DE CONVERSACIÓN ─────────────────────────────────────────── */
-let chatHistory = [];
-
-async function sendChat() {
+function sendChat() {
   const input = document.getElementById('chat-in');
   const text = input.value.trim();
   if(!text) return;
   
   const box = document.getElementById('chat-box');
   
-  // Mensaje del usuario
   const userMsg = document.createElement('div');
   userMsg.className = 'msg msg-user';
   userMsg.innerText = text;
   box.appendChild(userMsg);
   input.value = '';
   box.scrollTop = box.scrollHeight;
-
-  // Añadir al historial
-  chatHistory.push({ role: 'user', content: text });
   
-  // Animación de pensamiento
   const thinking = document.createElement('div');
   thinking.className = 'msg-thinking';
   thinking.innerHTML = '<span class="spinner"></span> Consultando normativa de extranjería 2026...';
   box.appendChild(thinking);
   box.scrollTop = box.scrollHeight;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: EXTRANJERIA_SYSTEM_PROMPT,
-        messages: chatHistory
-      })
-    });
-
-    const data = await response.json();
-    const reply = data.content?.[0]?.text || 'Lo siento, no pude procesar tu consulta. Inténtalo de nuevo.';
-
-    // Guardar respuesta en historial
-    chatHistory.push({ role: 'assistant', content: reply });
-
+  
+  setTimeout(() => {
     thinking.remove();
     const botMsg = document.createElement('div');
     botMsg.className = 'msg msg-bot';
-    // Formatear markdown básico
-    botMsg.innerHTML = reply
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n\n/g, '<br><br>')
-      .replace(/\n- /g, '<br>• ')
-      .replace(/\n(\d+)\. /g, '<br>$1. ');
+    botMsg.innerHTML = buscarRespuesta(text);
     box.appendChild(botMsg);
-  } catch(err) {
-    thinking.remove();
-    const errMsg = document.createElement('div');
-    errMsg.className = 'msg msg-bot';
-    errMsg.innerHTML = '⚠️ Error al conectar con el servicio. Por favor, intenta de nuevo en unos segundos.';
-    box.appendChild(errMsg);
-  }
-
-  box.scrollTop = box.scrollHeight;
+    box.scrollTop = box.scrollHeight;
+  }, 900);
 }
 
 function quickQuery(text) {
